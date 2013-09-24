@@ -1,46 +1,62 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
 
 int op_menu();
 
 int main()
 {
 
-	int op = op_menu();
 	char cad[100], cadAux[100];
 	int quantitat;
-	int i = 0;
+	int i = 0, op = 0;
 
-	switch(op) {
+	do {
 
-	case 1:
+		op = op_menu();
+		switch(op) {
 
-		printf("\nCada quants caràcters? ");
-		getchar();
-		scanf("%d", &quantitat);
+		case 1:
 
-		int posicions[quantitat];
-		int posicio = 0;
+			printf("\nCada quants caràcters? ");
+			getchar();
+			scanf("%d", &quantitat);
 
-		for (i = 0; i < quantitat; i++) {
-			printf("\nEntra el %d dígit: ", i+1);
-			scanf("%d", &posicions[i]);
+			int posicions[quantitat];
+			int posicio = 0, actual = 0;
+
+			for (i = 0; i < quantitat; i++) {
+				printf("\nEntra el %d dígit per l'ordre: ", i+1);
+				scanf("%d", &posicions[i]);
+			}
+
+			printf("\nEntra la paraula a encriptar: ");
+			getchar();
+			gets(cad);
+
+			int aux = (strlen(cad) % quantitat) * quantitat;
+
+			for (i = 0; i < aux; i++) {
+				if (posicio >= quantitat) posicio = 0;
+
+				actual = i - posicio;
+				cadAux[i] = cad[actual+posicions[posicio]-1];
+
+				if (!isalpha(cadAux[i])) cadAux[i] = '-';
+
+				posicio++;
+			}
+
+			cadAux[i] = '\0';
+			puts(cadAux);
+			printf("\n\t%d\n", aux);
+
+			break;
+
 		}
-
-		printf("\nEntra la paraula a encriptar: ");
-		getchar();
-		gets(cad);
-
-		for (i = 0; i < strlen(cad); i++, posicio++) {
-			if (posicio >= quantitat) posicio = 0;
-			cadAux[i] = cad[i] + (int)posicions[posicio];
-		}
-
-		cadAux[i] = '\0';
-		puts(cadAux);
-
-		break;
-
-	}
+	} while (op != 6);
 
     return 0;
 }
