@@ -11,7 +11,7 @@ int main()
 
 	char cad[100], cadAux[100];
 	int quantitat;
-	int i = 0, op = 0;
+	int i = 0, op = 0, opcio = 0;
 
 	do {
 
@@ -20,38 +20,53 @@ int main()
 
 		case 1:
 
+			do {
+				printf("\n Que vols? \n1- Encriptar\n2 - Desencriptar\nOpció: ");
+				scanf("%d", &opcio);
+			} while(opcio < 1 || opcio > 2);
+
 			printf("\nCada quants caràcters? ");
 			getchar();
 			scanf("%d", &quantitat);
-
 			int posicions[quantitat];
 			int posicio = 0, actual = 0;
 
-			for (i = 0; i < quantitat; i++) {
-				printf("\nEntra el %d dígit per l'ordre: ", i+1);
-				scanf("%d", &posicions[i]);
+			switch(opcio) {
+
+			case 1:
+
+
+				for (i = 0; i < quantitat; i++) {
+					printf("\nEntra el %d dígit per l'ordre: ", i+1);
+					scanf("%d", &posicions[i]);
+				}
+
+				printf("\nEntra la paraula a encriptar: ");
+				getchar();
+				gets(cad);
+
+				int longitud;
+
+				if (strlen(cad) % quantitat == 0) longitud = strlen(cad);
+				else longitud = (strlen(cad) % quantitat) * quantitat;
+
+				for (i = 0; i < longitud; i++) {
+					if (posicio >= quantitat) posicio = 0;
+
+					actual = i - posicio;
+					cadAux[i] = cad[actual+posicions[posicio]-1];
+
+					if (!isalpha(cadAux[i])) cadAux[i] = '-';
+
+					posicio++;
+				}
+
+				cadAux[i] = '\0';
+				puts(cadAux);
+
+			break;
+
 			}
-
-			printf("\nEntra la paraula a encriptar: ");
-			getchar();
-			gets(cad);
-
-			int aux = (strlen(cad) % quantitat) * quantitat;
-
-			for (i = 0; i < aux; i++) {
-				if (posicio >= quantitat) posicio = 0;
-
-				actual = i - posicio;
-				cadAux[i] = cad[actual+posicions[posicio]-1];
-
-				if (!isalpha(cadAux[i])) cadAux[i] = '-';
-
-				posicio++;
-			}
-
-			cadAux[i] = '\0';
-			puts(cadAux);
-			printf("\n\t%d\n", aux);
 
 			break;
 
@@ -70,7 +85,7 @@ int op_menu() {
 		printf("\n1 - Transposició\n2 - Substitució Simple\n3 - Substitució Homofónica\n4 - Substitució Polifabética\n5 - Sortir\n\n\tOpció: ");
 		scanf("%d", &op);
 	}
-	while(op < 1 && op > 5);
+	while(op < 1 || op > 5);
 
 	return op;
 
