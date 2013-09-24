@@ -56,7 +56,6 @@ int main()
 
 					cadAux[i] = '\0';
 					puts(cadAux);
-					printf("%d - %d", longitud, strlen(cad));
 
 				break;
 				case 2:
