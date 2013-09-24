@@ -20,58 +20,78 @@ int main()
 
 		case 1:
 
-			do {
-				printf("\n Que vols? \n1- Encriptar\n2 - Desencriptar\nOpció: ");
-				scanf("%d", &opcio);
-			} while(opcio < 1 || opcio > 2);
+			opcio = op_encriptar();
 
 			printf("\nCada quants caràcters? ");
 			getchar();
 			scanf("%d", &quantitat);
 			int posicions[quantitat];
-			int posicio = 0, actual = 0;
+			int posicio = 0, actual = 0, longitud = 0;
 
 			switch(opcio) {
+				case 1:
 
-			case 1:
+					for (i = 0; i < quantitat; i++) {
+						printf("\nEntra el %d dígit per l'ordre: ", i+1);
+						scanf("%d", &posicions[i]);
+					}
 
+					printf("\nEntra la paraula a encriptar: ");
+					getchar();
+					gets(cad);
 
-				for (i = 0; i < quantitat; i++) {
-					printf("\nEntra el %d dígit per l'ordre: ", i+1);
-					scanf("%d", &posicions[i]);
-				}
+					if (strlen(cad) % quantitat == 0) longitud = strlen(cad);
+					else longitud = (strlen(cad) % quantitat) * quantitat;
 
-				printf("\nEntra la paraula a encriptar: ");
-				getchar();
-				gets(cad);
+					for (i = 0; i < longitud; i++) {
+						if (posicio >= quantitat) posicio = 0;
 
-				int longitud;
+						actual = i - posicio;
+						cadAux[i] = cad[actual+posicions[posicio]-1];
 
-				if (strlen(cad) % quantitat == 0) longitud = strlen(cad);
-				else longitud = (strlen(cad) % quantitat) * quantitat;
+						if (!isalpha(cadAux[i])) cadAux[i] = '-';
 
-				for (i = 0; i < longitud; i++) {
-					if (posicio >= quantitat) posicio = 0;
+						posicio++;
+					}
 
-					actual = i - posicio;
-					cadAux[i] = cad[actual+posicions[posicio]-1];
+					cadAux[i] = '\0';
+					puts(cadAux);
 
-					if (!isalpha(cadAux[i])) cadAux[i] = '-';
+				break;
+				case 2:
 
-					posicio++;
-				}
+					for (i = 0; i < quantitat; i++) {
+						printf("\nEntra el %d dígit per l'ordre: ", i+1);
+						scanf("%d", &posicions[i]);
+					}
 
-				cadAux[i] = '\0';
-				puts(cadAux);
+					printf("\nEntra la paraula a desencriptar: ");
+					getchar();
+					gets(cad);
 
-			break;
+					if (strlen(cad) % quantitat == 0) longitud = strlen(cad);
+					else longitud = (strlen(cad) % quantitat) * quantitat;
 
+					for (i = 0; i < longitud; i++) {
+						if (posicio >= quantitat) posicio = 0;
+
+						actual = i - posicio;
+						cadAux[i] = cad[actual+posicions[posicio]-1];
+
+						if (cadAux[i] == '-') cadAux[i] = ' ';
+
+						posicio++;
+					}
+
+					cadAux[i] = '\0';
+					puts(cadAux);
+				break;
 			}
 
 			break;
 
 		}
-	} while (op != 6);
+	} while (op != 5);
 
     return 0;
 }
@@ -88,5 +108,17 @@ int op_menu() {
 	while(op < 1 || op > 5);
 
 	return op;
+
+}
+
+int op_encriptar() {
+
+	int opcio;
+	do {
+		printf("\n Que vols? \n1- Encriptar\n2 - Desencriptar\nOpció: ");
+		scanf("%d", &opcio);
+	} while(opcio < 1 || opcio > 2);
+
+	return opcio;
 
 }
