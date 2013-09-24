@@ -41,7 +41,7 @@ int main()
 					gets(cad);
 
 					if (strlen(cad) % quantitat == 0) longitud = strlen(cad);
-					else longitud = (strlen(cad) % quantitat) * quantitat;
+					else longitud = strlen(cad) + (quantitat - (strlen(cad) % quantitat));
 
 					for (i = 0; i < longitud; i++) {
 						if (posicio >= quantitat) posicio = 0;
@@ -49,13 +49,14 @@ int main()
 						actual = i - posicio;
 						cadAux[i] = cad[actual+posicions[posicio]-1];
 
-						if (!isalpha(cadAux[i])) cadAux[i] = '-';
+						if (!isalpha(cadAux[i]) && cadAux[i] != ' ') cadAux[i] = '-';
 
 						posicio++;
 					}
 
 					cadAux[i] = '\0';
 					puts(cadAux);
+					printf("%d - %d", longitud, strlen(cad));
 
 				break;
 				case 2:
