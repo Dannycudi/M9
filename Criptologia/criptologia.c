@@ -23,7 +23,7 @@ int main()
 
 			case 1: //Transposició
 			{
-				printf("\n\nTransposició!\n\n");
+				printf("\n\nTransposició!\n");
 				opcio = op_encriptar();
 
 				printf("\nCada quants caràcters? ");
@@ -96,7 +96,18 @@ int main()
 			} break;
 			case 2: //Substitució Simple!
 			{
-				printf("\n\nSubstitució Simple!\n\n");
+
+				char abc[28];
+
+				printf("\n\nSubstitució Simple!\n");
+
+				//Omplim el diccionari ABC
+				for (i = 0; i < 26; i++) {
+					abc[i] = 97 + i;
+					printf("%c", abc[i]);
+				}
+				printf("\n\n");
+
 				opcio = op_encriptar();
 
 				printf("\nCada quants caràcters? ");
