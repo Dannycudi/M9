@@ -51,16 +51,18 @@ int main()
 						for (i = 0; i < longitud; i++) {
 							if (posicio >= quantitat) posicio = 0;
 
-							actual = i - posicio;
-							cadAux[i] = cad[actual+posicions[posicio]-1];
+							//La posición actual de cada bloque (quantitat). Bloque x, posición x.
+							actual = i - posicio + posicions[posicio] - 1;
+							cadAux[actual] = cad[i];
 
-							if (!isalpha(cadAux[i]) && cadAux[i] != ' ') cadAux[i] = '-';
+							if (!isalpha(cadAux[actual]) && cadAux[actual] != ' ' && !isdigit(cadAux[actual])) cadAux[actual] = '-';
 
 							posicio++;
 						}
 
 						cadAux[i] = '\0';
 						puts(cadAux);
+
 					}
 					break;
 					case 2: {
@@ -90,6 +92,7 @@ int main()
 
 						cadAux[i] = '\0';
 						puts(cadAux);
+
 					} break;
 				} //End Switch Encriptar - Desencriptar
 
