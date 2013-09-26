@@ -111,7 +111,6 @@ int main()
 				printf("\nQuants caràcters vols sumar? ");
 				getchar();
 				scanf("%d", &quantitat);
-				int posicio = 0, actual = 0, longitud = 0;
 
 				switch(opcio) //Switch Encriptar - Desencriptar
 				{
@@ -122,9 +121,7 @@ int main()
 						getchar();
 						gets(cad);
 
-						longitud = strlen(cad);
-
-						for (i = 0; i < longitud; i++) {
+						for (i = 0; i < strlen(cad); i++) {
 
 							cadAux[i] = cad[i] + quantitat;
 
@@ -141,9 +138,7 @@ int main()
 						getchar();
 						gets(cad);
 
-						longitud = strlen(cad);
-
-						for (i = 0; i < longitud; i++) {
+						for (i = 0; i < strlen(cad); i++) {
 
 							cadAux[i] = cad[i] - quantitat;
 
