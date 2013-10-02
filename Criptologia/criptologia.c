@@ -12,8 +12,7 @@ int main()
 {
 
 	char cad[100], cadAux[100];
-	int quantitat;
-	int i = 0, j = 0, op = 0, opcio = 0, diccionari = 0;
+	int quantitat, i = 0, j = 0, k = 0, op = 0, opcio = 0, diccionari = 0;
 
 	do {
 
@@ -208,6 +207,8 @@ int main()
 						getchar();
 						gets(cad);
 
+						printf("\nResultat: ");
+
 						switch(diccionari) {
 
 							case 1: //Diccionari 1
@@ -244,35 +245,63 @@ int main()
 						getchar();
 						gets(cad);
 
+						printf("\nResultat: ");
+
 						switch(diccionari) {
 
 							case 1: //Diccionari 1
+								quantitat = 0; j = 0;
 								for (i = 0; i < strlen(cad); i++) {
-									if (isalpha(cad[i])) {
-										aux = tolower(cad[i]) - 'a';
-										printf("%d ",abc[aux][repetides[aux]]);
-										repetides[aux]++;
-										if (repetides[aux] == 3) repetides[aux] = 0;
+									if (cad[i] == ' ' && j > 0) {
+										for (k = 0; k < 26; k++) {
+											for (j = 0; j < 3; j++) {
+												if (abc[k][j] == quantitat){
+													printf("%c", k + 'a');
+													j = 3; k = 26;
+												}
+											}
+										}
+
+										quantitat = 0;
+										j = 0;
 									}
-									else printf("- ");
+									else {
+										quantitat = atoi(&cad[i]);
+										if (quantitat > 9)	i++;
+										j++;
+									}
 								}
 								break;
 							case 2: //Diccionari 2
+								quantitat = 0; j = 0;
 								for (i = 0; i < strlen(cad); i++) {
-									if (isalpha(cad[i])) {
-										aux = tolower(cad[i]) - 'a';
-										printf("%d ",zyx[aux][repetides[aux]]);
-										repetides[aux]++;
-										if (repetides[aux] == 3) repetides[aux] = 0;
+									if (cad[i] == ' ' && j > 0) {
+										for (k = 0; k < 26; k++) {
+											for (j = 0; j < 3; j++) {
+												if (zyx[k][j] == quantitat){
+													printf("%c", k + 'a');
+													j = 3; k = 26;
+												}
+											}
+										}
+
+										quantitat = 0;
+										j = 0;
 									}
-									else printf("- ");
+									else {
+										quantitat = atoi(&cad[i]);
+										if (quantitat > 9)	i++;
+										j++;
+									}
 								}
 								break;
 
-						}
+						} //End Switch Diccionari
 
 					} break;
 				} //End Switch Encriptar - Desencriptar
+
+				printf("\n\n");
 
 			} break;
 		} //End Swtich Menú
