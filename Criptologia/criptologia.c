@@ -177,26 +177,26 @@ int main()
 
 				int abc[26][3], zyx[26][3], repetides[26] = {0}, cont = 0, aux;
 
-				for (i = 0; i < 26; i++) {
-					printf("%c - ", i+65);
-					for (j = 0; j < 3; j++) {
-						abc[i][j] = cont;
-						printf("%d ", abc[i][j]);
-						cont++;
-					}
-					printf("\n");
-				}
-				printf("\n\n\n");
-				cont = 26*3;
-				for (i = 0; i < 26; i++) {
-					printf("%c - ", i+65);
-					for (j = 0; j < 3; j++) {
-						zyx[i][j] = cont;
-						printf("%d ", zyx[i][j]);
-						cont--;
-					}
-					printf("\n");
-				}
+//				for (i = 0; i < 26; i++) {
+//					printf("%c - ", i+65);
+//					for (j = 0; j < 3; j++) {
+//						abc[i][j] = cont;
+//						printf("%d ", abc[i][j]);
+//						cont++;
+//					}
+//					printf("\n");
+//				}
+//				printf("\n\n\n");
+//				cont = 26*3;
+//				for (i = 0; i < 26; i++) {
+//					printf("%c - ", i+65);
+//					for (j = 0; j < 3; j++) {
+//						zyx[i][j] = cont;
+//						printf("%d ", zyx[i][j]);
+//						cont--;
+//					}
+//					printf("\n");
+//				}
 
 				switch(opcio) //Switch Encriptar - Desencriptar
 				{
@@ -251,11 +251,11 @@ int main()
 
 							case 1: //Diccionari 1
 								quantitat = 0; j = 0;
-								for (i = 0; i < strlen(cad); i++) {
-									if (cad[i] == ' ' && j > 0) {
-										for (k = 0; k < 26; k++) {
+								for (i = 0; i < strlen(cad); i++) { //Recorremos la cadena
+									if (cad[i] == ' ' && j > 0) { //Si es un espacio y no es el primero
+										for (k = 0; k < 26; k++) { //Recorremos el diccionario buscando el numero
 											for (j = 0; j < 3; j++) {
-												if (abc[k][j] == quantitat){
+												if (abc[k][j] == quantitat){ //Si lo encuentra, imprimimos la letra que es.
 													printf("%c", k + 'a');
 													j = 3; k = 26;
 												}
@@ -302,6 +302,74 @@ int main()
 				} //End Switch Encriptar - Desencriptar
 
 				printf("\n\n");
+
+			} break;
+			case 4: //Substitució Polifabètica!
+			{
+
+				printf("\n\nSubstitució Polifabètica!\n");
+
+				opcio = op_encriptar();
+
+				printf("\nQuants caràcters vols? ");
+				getchar();
+				scanf("%d", &quantitat);
+
+				switch(opcio) //Switch Encriptar - Desencriptar
+				{
+					case 1:
+					{
+
+						printf("\nEntra la paraula a encriptar: ");
+						getchar();
+						gets(cad);
+
+						for (i = 0; i < strlen(cad); i++) {
+
+							cadAux[i] = cad[i] + quantitat;
+
+							if (cadAux[i] == (32 + quantitat)) {
+								cadAux[i] = 32; //Si es un espacio.
+							}
+							else if ((cadAux[i] > 122 && cad[i] < 123) || (cadAux[i] > 90 && cad[i] < 91)) {
+
+								//Si se pasa de la Z o z
+								cadAux[i] = cadAux[i] - 26;
+
+							}
+
+							if (!isalpha(cadAux[i]) && cadAux[i] != ' ' && !isdigit(cadAux[i])) cadAux[i] = '-';
+						}
+
+						cadAux[i] = '\0';
+						puts(cadAux);
+
+					} break;
+					case 2:
+					{
+						printf("\nEntra la paraula a desencriptar: ");
+						getchar();
+						gets(cad);
+
+						for (i = 0; i < strlen(cad); i++) {
+
+							cadAux[i] = cad[i] - quantitat;
+
+							if (cadAux[i] == (32 - quantitat)) { //Si es un espacio
+								cadAux[i] = 32;
+							}
+							else if ((cadAux[i] < 65 && cad[i] > 64) || (cadAux[i] < 97 && cad[i] > 96)) {
+								//Si se pasa el abecedario
+								cadAux[i] = cadAux[i] + 26;
+							}
+
+							if (!isalpha(cadAux[i]) && cadAux[i] != ' ' && !isdigit(cadAux[i])) cadAux[i] = '-';
+						}
+
+						cadAux[i] = '\0';
+						puts(cadAux);
+					} break;
+				} //End Switch Encriptar - Desencriptar
 
 			} break;
 		} //End Swtich Menú
