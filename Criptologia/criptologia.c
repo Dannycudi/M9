@@ -177,6 +177,7 @@ int main()
 
 				int abc[26][3], zyx[26][3], repetides[26] = {0}, cont = 0, aux;
 
+				//Imprimir los diccionarios.
 //				for (i = 0; i < 26; i++) {
 //					printf("%c - ", i+65);
 //					for (j = 0; j < 3; j++) {
@@ -307,70 +308,130 @@ int main()
 			case 4: //Substitució Polifabètica!
 			{
 
+				char diccionaris[6][26], rotor[3], clau[3], lletra, abc;
+
+				lletra = 'A';
+
 				printf("\n\nSubstitució Polifabètica!\n");
 
-				opcio = op_encriptar();
+				//Creamos los diccionarios
+				for (i = 0; i < 6; i++) {
+					abc = lletra;
+					for (j = 0; j < 26; j++) {
+						diccionaris[i][j] = abc++;
+						if (abc == 'Z') abc = 'A';
+					}
+					lletra++;
+					if (lletra == 'Z') lletra = 'A';
+				}
 
-				printf("\nQuants caràcters vols? ");
-				getchar();
-				scanf("%d", &quantitat);
+				//Imprimir los diccionarios.
+//				for (i = 0; i < 6; i++) {
+//					printf("Diccionari %d -> ", i+1);
+//					for (j = 0; j < 26; j++) {
+//						printf("%c",diccionaris[i][j]);
+//					}
+//					printf("\n");
+//				}
+
+				opcio = op_encriptar();
 
 				switch(opcio) //Switch Encriptar - Desencriptar
 				{
 					case 1:
 					{
 
-						printf("\nEntra la paraula a encriptar: ");
+						printf("\nEntra la clau (3 lletres) ");
 						getchar();
+						gets(clau);
+
+						//Guardamos las letras por las que empezará cada rotor.
+						for (i = 0; i < strlen(clau); i++) rotor[i] = toupper(clau[i]);
+
+						printf("\nEntra la paraula a encriptar: ");
 						gets(cad);
+						printf("\n\t");
 
 						for (i = 0; i < strlen(cad); i++) {
+							lletra = toupper(cad[i]);
+							lletra = diccionaris[rotor[0]%2][lletra-'A']; //Busquem la lletra en el primer rotor
+							lletra = diccionaris[rotor[1]%2+2][lletra-'A']; //El resultat al segon rotor
+							lletra = diccionaris[rotor[2]%2+4][lletra-'A']; //El resultat al tercer rotor
 
-							cadAux[i] = cad[i] + quantitat;
+							printf("%c", lletra);
 
-							if (cadAux[i] == (32 + quantitat)) {
-								cadAux[i] = 32; //Si es un espacio.
+							// Le subimos una vuelta al rotor que haga falta
+							if (rotor[2] == 'Z') {
+								rotor[2] = 'A';
+								if (rotor[1] == 'Z') {
+									rotor[1] = 'A';
+									if (rotor[0] == 'Z') {
+										rotor[0] = 'A';
+									}
+									else rotor[0]++;
+								}
+								else rotor[1]++;
 							}
-							else if ((cadAux[i] > 122 && cad[i] < 123) || (cadAux[i] > 90 && cad[i] < 91)) {
+							else rotor[2]++;
 
-								//Si se pasa de la Z o z
-								cadAux[i] = cadAux[i] - 26;
-
-							}
-
-							if (!isalpha(cadAux[i]) && cadAux[i] != ' ' && !isdigit(cadAux[i])) cadAux[i] = '-';
 						}
 
-						cadAux[i] = '\0';
-						puts(cadAux);
+						//printf("%c %c %c \n\n", rotor[0], rotor[1], rotor[2]);
+
 
 					} break;
 					case 2:
 					{
-						printf("\nEntra la paraula a desencriptar: ");
+						printf("\nEntra la clau (3 lletres) ");
 						getchar();
+						gets(clau);
+
+						//Guardamos las letras por las que empezará cada rotor.
+						for (i = 0; i < strlen(clau); i++) rotor[i] = toupper(clau[i]);
+
+						printf("\nEntra la paraula a desencriptar: ");
 						gets(cad);
+						printf("\n\t");
 
-						for (i = 0; i < strlen(cad); i++) {
-
-							cadAux[i] = cad[i] - quantitat;
-
-							if (cadAux[i] == (32 - quantitat)) { //Si es un espacio
-								cadAux[i] = 32;
+						for(i=0; i<strlen(cad)-1; i++){
+							if(rotor[2] == 'Z'){
+								rotor[2] = 'A';
+								if(rotor[1] == 'Z'){
+									rotor[1] = 'A';
+									if(rotor[0] == 'Z'){
+										rotor[0] = 'A';
+									}
+									else rotor[0]++;
+								}
+								else rotor[1]++;
 							}
-							else if ((cadAux[i] < 65 && cad[i] > 64) || (cadAux[i] < 97 && cad[i] > 96)) {
-								//Si se pasa el abecedario
-								cadAux[i] = cadAux[i] + 26;
-							}
+							else rotor[2]++;
+						}
 
-							if (!isalpha(cadAux[i]) && cadAux[i] != ' ' && !isdigit(cadAux[i])) cadAux[i] = '-';
+						for(i=strlen(cad)-1; i>=0; i--){
+							lletra = cad[i]-(rotor[2]%2+4)-(rotor[1]%2+2)-(rotor[0]%2);
+							if(rotor[2] == 'A'){
+								rotor[2] = 'Z';
+								if(rotor[1] == 'A'){
+									rotor[1] = 'Z';
+									if(rotor[0] == 'A'){
+										rotor[0] = 'Z';
+									}
+									else rotor[0]--;
+								}
+								else rotor[1]--;
+							}
+							else rotor[2]--;
+
+							cadAux[i] = lletra;
 						}
 
 						cadAux[i] = '\0';
-						puts(cadAux);
+						printf("%s", cadAux);
+
 					} break;
 				} //End Switch Encriptar - Desencriptar
-
+				printf("\n\n");
 			} break;
 		} //End Swtich Menú
 
