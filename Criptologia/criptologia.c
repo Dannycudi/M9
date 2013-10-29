@@ -178,26 +178,26 @@ int main()
 				int abc[26][3], zyx[26][3], repetides[26] = {0}, cont = 0, aux;
 
 				//Imprimir los diccionarios.
-//				for (i = 0; i < 26; i++) {
-//					printf("%c - ", i+65);
-//					for (j = 0; j < 3; j++) {
-//						abc[i][j] = cont;
-//						printf("%d ", abc[i][j]);
-//						cont++;
-//					}
-//					printf("\n");
-//				}
-//				printf("\n\n\n");
-//				cont = 26*3;
-//				for (i = 0; i < 26; i++) {
-//					printf("%c - ", i+65);
-//					for (j = 0; j < 3; j++) {
-//						zyx[i][j] = cont;
-//						printf("%d ", zyx[i][j]);
-//						cont--;
-//					}
-//					printf("\n");
-//				}
+				for (i = 0; i < 26; i++) {
+					//printf("%c - ", i+65);
+					for (j = 0; j < 3; j++) {
+						abc[i][j] = cont;
+						//printf("%d ", abc[i][j]);
+						cont++;
+					}
+					//printf("\n");
+				}
+				//printf("\n\n\n");
+				cont = 26*3;
+				for (i = 0; i < 26; i++) {
+					//printf("%c - ", i+65);
+					for (j = 0; j < 3; j++) {
+						zyx[i][j] = cont;
+						//printf("%d ", zyx[i][j]);
+						cont--;
+					}
+					//printf("\n");
+				}
 
 				switch(opcio) //Switch Encriptar - Desencriptar
 				{
@@ -410,6 +410,7 @@ int main()
 
 						for(i=strlen(cad)-1; i>=0; i--){
 							lletra = cad[i]-(rotor[2]%2+4)-(rotor[1]%2+2)-(rotor[0]%2);
+							if (lletra < 'A') lletra = 'Z' - ('A' - lletra);
 							if(rotor[2] == 'A'){
 								rotor[2] = 'Z';
 								if(rotor[1] == 'A'){
@@ -426,7 +427,7 @@ int main()
 							cadAux[i] = lletra;
 						}
 
-						cadAux[i] = '\0';
+						cadAux[strlen(cad)] = '\0';
 						printf("%s", cadAux);
 
 					} break;
