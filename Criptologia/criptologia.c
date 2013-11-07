@@ -385,6 +385,11 @@ int main()
 						cadAux[i] = '\0';
 						printf("\n\n\tRESULTAT: %s", cadAux);
 
+						printf("\n\n\tCLAU: ");
+						for (i = 0; i < rotors; i++) {
+							printf("%c", rotor[i]);
+						}
+
 
 					} break;
 					case 2:
@@ -417,7 +422,7 @@ int main()
 							}
 						}
 
-						printf("\n\tPalabra clave actualizada:");
+						printf("\n\tPalabra clave actualizada: ");
 
 						for (i = 0; i < rotors; i++) {
 							printf("%c", rotor[i]);
@@ -431,7 +436,7 @@ int main()
 							cont = rotors*2-2;
 							for (j = 0; j < rotors; j++) {
 								if (isalpha(lletra)){
-									lletra = lletra-(rotor[rotors-j]%2+cont);
+									lletra = lletra-(rotor[rotors-j-1]%2+cont);
 									if (lletra < 'A') lletra = 'Z' - ('A' - lletra);
 								}
 								printf("| ROTOR %d -> %c ", rotors-j, lletra);
